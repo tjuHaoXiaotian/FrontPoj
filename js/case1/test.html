@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>计时器</title>
+    <script type="text/javascript">
+        var num=0;
+        var result;
+        function startCount() {
+            document.getElementById('count').value=num;
+            num=num+1;
+//        alert("run");
+            result= setTimeout(startCount,1000);
+//            alert(result)
+        }
+
+        function stop(){
+            alert("点击停止："+result);
+            clearTimeout(result);
+        }
+    </script>
+</head>
+
+
+<body>
+<form>
+    <input type="text" id="count" />
+</form>
+
+<button onclick="startCount()">开始</button>
+<button onclick="stop()">停止</button>
+
+
+</body>
+</html>

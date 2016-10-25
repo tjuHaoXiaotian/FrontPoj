@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编程练习</title>
+    <style>
+        *{
+            margin: 0;
+            padding:0;
+        }
+
+        body{
+            background-color: #B4DAF0;
+        }
+
+        .content{
+            width:450px;
+            margin:50px auto;
+            border:2px solid white;
+        }
+
+        /* 上边的标签*/
+        .type{
+            list-style: none;
+        }
+
+        .type > li{
+            float: left;
+        }
+
+        .type > li > a{
+            display: inline-block;
+            width: 100px;
+            height:30px;
+            text-decoration:none;
+            color:black;
+            text-align: center;
+        }
+
+        /* 上边的标签 end*/
+
+
+        /* 主题内容*/
+        .info{
+            height: 150px;
+            border: 3px solid #93C5E2;
+            background-color: white;
+            padding:20px;
+            clear:left;
+            text-align: center;
+            line-height: 2em;
+        }
+
+        #info1{
+            display: block;
+        }
+
+        #a-info1{
+            background-color: #93C5E2;
+            color: white;
+        }
+
+        #info2{
+            display: none;
+        }
+        #a-info2{
+            background-color: #B4DAF0;
+        }
+
+        #info3{
+            display: none;
+        }
+        #a-info3{
+            background-color: #B4DAF0;
+        }
+        /* 主题内容 end*/
+
+    </style>
+
+    <script type="text/javascript">
+        function show(id){
+            var infoObjs = document.getElementsByClassName("info");
+            var links = document.getElementsByClassName("info-link");
+            for(var i = 0; i<infoObjs.length;i++){
+                if(infoObjs[i].id == id){
+                    infoObjs[i].style.display = "block";
+                    links[i].style.backgroundColor = "#93C5E2";
+                    links[i].style.color = "white";
+                    links[i].style.borderTop = "3px solid #93C5E2";
+                    links[i].style.marginTop= "-3px";
+                }else{
+                    infoObjs[i].style.display = "none";
+                    links[i].style.backgroundColor = "#B4DAF0";
+                    links[i].style.color = "black";
+                    links[i].style.border = "none";
+                    links[i].style.marginTop= "0";
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+
+<div class="content">
+    <ul class="type">
+        <li>
+            <a class="info-link" id="a-info1" href="#" onclick='show("info1")'>房产</a>
+        </li>
+        <li>
+            <a class="info-link" id="a-info2" href="#" onclick='show("info2")'>家居</a>
+        </li>
+        <li>
+            <a class="info-link" id="a-info3" href="#" onclick='show("info3")'>二手房</a>
+        </li>
+    </ul>
+    <div class="info" id="info1">
+        275万购昌平邻铁三居 总价20万买一居<br>
+        200万内购五环三居 140万安家东三环<br>
+        北京首现零首付楼盘 53万购东5环50平<br>
+        京楼盘直降5000 中信府 公园楼王现房
+    </div>
+    <div class="info" id="info2">
+        40平出租屋大改造 美少女的混搭小窝<br>
+        经典清新简欧爱家 90平老房焕发新生<br>
+        新中式的酷色温情 66平撞色活泼家居<br>
+        瓷砖就像选好老婆 卫生间烟道的设计
+    </div>
+    <div class="info" id="info3">
+        通州豪华3居260万 二环稀缺2居250w甩<br>
+        西3环通透2居290万 130万2居限量抢购<br>
+        黄城根小学学区仅260万 121平70万抛!<br>
+        独家别墅280万 苏州桥2居优惠价248万
+    </div>
+</div>
+
+
+</body>
+</html>

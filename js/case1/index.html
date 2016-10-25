@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        function cl(){
+            domObj = document.getElementById("test");
+            console.log("domObj",domObj);
+            alert(domObj.id+" class: "+domObj.className)
+        }
+    </script>
+</head>
+<body>
+<ol id="test" class="testClass testClass1">
+    <li>
+        alter();
+        confirm();
+        prompt();
+    </li>
+
+    <li>
+        obj = window.open("url","name","attr");
+        obj.close()
+    </li>
+
+    <li>
+        document.write("plu plu plu");
+        domObj = document.getElementById();
+        domObj.style.xxxxxxx = "";
+        domObj.style.display = "none";
+        domObj.style.display = "block";
+        domObj.className = "";
+    </li>
+</ol>
+
+<button onclick="cl()">点击</button>
+</body>
+</html>
