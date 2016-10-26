@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件流</title>
+</head>
+<body>
+<ol>
+    <li>事件流：事件冒泡||事件捕获</li>
+
+    <li>添加事件的方法：
+        <ul>
+            <li>html上添加（缺点，杂糅）</li>
+            <li>DOM0级事件处理程序： btn.onclick=function(){ ... }</li>
+            <li>DOM2 级事件处理程序：addEventListener('click',function,true||false(捕获||冒泡)),removeEventListener('click',function,true||false(捕获||冒泡))  <b>注意没有on</b></li>
+            <li>DOM0级与DOM2级可以对同一事件叠加多个处理程序，按叠加的顺序执行</li>
+            <li>addEventListener('click',function(){  <br>
+                    this.value // (有个this，指触发事件的元素节点) <br>
+                },false)</li>
+            <li><h5>IE添加事件处理程序：</h5>
+                <ul>
+                    <li>attachEvent('onclick',function) <br>
+                        detachEvent('onclick',function) <br>
+                        <i>注意：事件 + on</i>
+                    </li>
+                </ul>
+            </li>
+            <li><h5 id="cross">跨浏览器demo：点击测试</h5>
+                <code>
+
+                    <script>
+                        eventUtil = {
+                            addEvent:function(element,eventName,func){  // eventName:click
+                                if(element.addEventListener){  // 火狐，google等，支持
+                                    element.addEventListener(eventName,func,false);
+                                }else if(element.attachEvent){
+                                    element.attachEvent("on"+eventName,func);
+                                }else{  // dom0 级
+                                    element["on"+eventName] = func;
+                                }
+                            },
+                            removeEvent:function(element,eventName,func){
+                                if(element.removeEventListener){  // 火狐，google等，支持
+                                    element.removeEventListener(eventName,func,false);
+                                }else if(element.detachEvent){
+                                    element.detachEvent("on"+eventName,func);
+                                }else{  // dom0 级
+                                    element["on"+eventName] = null;
+                                }
+                            }
+                        };
+                        var ele = document.getElementById("cross");
+                        var func = function(event){
+//                            alert(this.innerHTML);
+                            alert(event.type);
+                        };
+                        eventUtil.addEvent(ele,"click",func);
+//                        eventUtil.removeEvent(ele,"click",func)
+                    </script>
+
+                    eventUtil = {
+                    &nbsp;addEvent:function(element,eventName,func){  // eventName:click<br>
+                    &nbsp;&nbsp;if(element.addEventListener){  // 火狐，google等，支持<br>
+                    &nbsp;&nbsp;&nbsp;element.addEventListener(eventName,func,false);<br>
+                    &nbsp;&nbsp;}else if(element.attachEvent){<br>
+                    &nbsp;&nbsp;&nbsp;element.attachEvent("on"+eventName,func);<br>
+                    &nbsp;&nbsp;}else{  // dom0 级<br>
+                    &nbsp;&nbsp;&nbsp;element["on"+eventName] = func;<br>
+                    &nbsp;&nbsp;}<br>
+                    &nbsp;},<br>
+                    &nbsp;removeEvent:function(element,eventName,func){<br>
+                    &nbsp;&nbsp;if(element.removeEventListener){  // 火狐，google等，支持<br>
+                    &nbsp;&nbsp;&nbsp;element.removeEventListener(eventName,func,false);<br>
+                    &nbsp;&nbsp;}else if(element.detachEvent){<br>
+                    &nbsp;&nbsp;&nbsp;element.detachEvent("on"+eventName,func);<br>
+                    &nbsp;&nbsp;}else{  // dom0 级<br>
+                    &nbsp;&nbsp;&nbsp;element["on"+eventName] = null;<br>
+                    &nbsp;&nbsp;}<br>
+                    &nbsp;}<br>
+                    };<br>
+                    var ele = document.getElementById("cross");<br>
+                    eventUtil.addEvent(ele,"click",function(){<br>
+                    &nbsp;alert(this.innerHTML);<br>
+                    })
+                </code>
+            </li>
+        </ul>
+    </li>
+
+    <li>dom： 中的事件对象
+        <ul>
+            <li>event.type ：触发的事件类型</li>
+            <li>event.target ：触发事件的目标元素</li>
+            <li>stopPropagation()方法，用于阻止事件冒泡</li>
+            <li>preventDefault():阻止事件的默认行为:
+                <a id="preventDefault" href="../case1/challenge.html">测试</a>
+
+                <script>
+                    var a_link = document.getElementById("preventDefault");
+                    eventUtil.addEvent(a_link,"click",function(event){
+//                        alert(event.type);
+                        alert(event.target.nodeName);
+                        event.preventDefault();
+                    })
+                </script>
+            </li>
+        </ul>
+    </li>
+
+    <li>IE 中的事件对象：
+        <ul>
+            <li>event.type ：触发的事件类型</li>
+            <li>event.srcElement ：触发事件的目标元素<i> target = event.target || event.srcElement (实现跨浏览器)</i>
+            </li>
+            <li>cancelBubble属性，用于阻止冒泡（true||false）</li>
+            <li>returnValue=false:阻止事件的默认行为:</li>
+
+        </ul>
+    </li>
+
+</ol>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>challenge</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+
+        .selector{
+            width:300px;
+            margin:0 auto;
+        }
+
+        .icon-down{
+            display: inline-block;
+            margin-left:30px;
+            width:30px;
+            height:30px;
+            background-image: url(down.png);
+            background-repeat: no-repeat;
+            background-position: bottom;
+            background-size: 60%;
+        }
+
+        a{
+            display: block;
+            width:170px;
+            text-decoration: none;
+            color: #00B79A;
+            padding-left:20px;
+            padding-bottom: 10px;
+            text-align:center;
+        }
+
+        .selector > a{
+            border: 2px solid #00B79A;
+        }
+
+        .selector > ul{
+            list-style: none;
+        }
+
+        /*.selector > ul  a:hover{*/
+            /*background-color: #EDFEF2;*/
+        /*}*/
+
+        #option{
+            border: 2px solid #00B79A;
+            border-top: none;
+            width:190px;
+            display:none;
+        }
+
+    </style>
+
+    <script>
+        window.onload = function(){
+            var time = 0;
+            var selectObj = document.getElementById("select");
+            var selectText = document.getElementById("select-text");
+            var optionEle = document.getElementById("option");
+            var options = optionEle.getElementsByTagName("a");
+            var index = 0;
+            var total = options.length;
+
+
+            for(var j = 0;j < total;j++){
+                options[j].onmouseover = function(){
+                    for(var k = 0;k < total;k++){
+                        options[k].style.backgroundColor = "#fff";
+                    }
+                    this.style.backgroundColor = "#EDFEF2";
+                };
+
+                options[j].onclick = function(e){
+                    e = e || window.event;
+                    if(e.stopPropagation){
+                        e.stopPropagation();
+                    }else if(e.cancelBubble){
+                        e.cancelBubble = true;
+                    }
+
+                    optionEle.style.display = "none";
+                    time = 0;
+                    document.onkeyup = null;
+                    index = this.id[this.id.length-1];
+                    selectText.innerHTML = this.innerHTML;
+                };
+
+                options[j].onkeyup = function(e){
+                    e = e || window.event;
+                    if(e.keyCode == 13){  //enter
+                        optionEle.style.display = "none";
+                        time = 0;
+                        document.onkeyup = null;
+                        index = this.id[this.id.length-1];
+                        selectText.innerHTML = this.innerHTML;
+                    }
+                }
+            }
+
+            function click(e){
+                e = e || window.event;
+                if(e.stopPropagation){
+                    e.stopPropagation();
+                }else if(e.cancelBubble){
+                    e.cancelBubble = true;
+                }
+                if(time == 0) {
+                    optionEle.style.display = "block";
+                    time = 1;
+
+                    for(var k = 0;k < total;k++){
+                        options[k].style.backgroundColor = "#fff";
+                    }
+                    options[index-1].style.backgroundColor = "#EDFEF2";
+
+                    document.onkeyup = function(event){
+                        event = event || window.event;
+                        if(event.keyCode == 38){ // up
+                            if(index > 1){
+                                index--;
+                            }else{
+                                index = total;
+                            }
+                        }else if(event.keyCode == 40) {  //down
+                            if(index < total){
+                                index++;
+                            }else{
+                                index = 1;
+                            }
+                        }
+
+                        for(var i = 0;i < total;i++){
+                            if(i+1 == index){
+                                options[i].style.backgroundColor = "#EDFEF2";
+                                options[i].focus();
+                            }else{
+                                options[i].style.backgroundColor = "#fff";
+                            }
+                        }
+
+                    };
+
+
+                    document.onclick = function(){
+                        optionEle.style.display = "none";
+                        time = 0;
+                        document.onkeyup = null;
+                    }
+
+                }else{
+                    optionEle.style.display = "none";
+                    time = 0;
+                    document.onkeyup = null;
+                }
+            }
+
+
+
+            selectObj.onclick = click;
+
+
+
+        };
+    </script>
+</head>
+<body>
+
+
+
+<div class="selector">
+    <a href="#" id="select"><span id="select-text">请选择分类</span><span class="icon-down"></span></a>
+    <ul id = "option">
+        <li><a href="#" id="option1">ASP开发</a></li>
+        <li><a href="#" id="option2">.NET开发</a></li>
+        <li><a href="#" id="option3">PHP开发</a></li>
+        <li><a href="#" id="option4">Javascript开发</a></li>
+        <li><a href="#" id="option5">Java开发</a></li>
+    </ul>
+</div>
+</body>
+</html>
