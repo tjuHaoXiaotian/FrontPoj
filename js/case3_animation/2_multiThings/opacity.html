@@ -38,11 +38,64 @@
             opacity: 0;
             /*filter:alpha(opacity=60);*/
         }
+
+
+        #browser-back{
+            width: 100%;
+            height: 100%;
+            background-color: #393939;
+            /*opacity: 0.6;*/
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+        }
+
+        #browser-img{
+            /*display: block;*/
+            position: fixed;
+            top:50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+            max-width: 100%;
+            max-height:100%;
+            /*margin-top: 10px;*/
+            /*padding: 20px;*/
+        }
+
+        #left{
+            position: fixed;
+            top:50%;
+            left:5%;
+            max-width: 48px;
+            transform: translate(-50%,-50%);
+        }
+
+        #right{
+            position: fixed;
+            top:50%;
+            right:5%;
+            max-width: 48px;
+            transform: translate(50%,-50%);
+        }
     </style>
 
     <script>
         window.onload = function(){
-            var images = document.getElementsByTagName("img");
+//            var images = document.getElementsByTagName("img");
+            var images = document.getElementsByClassName("images");
+
+            var currentSelectIndex = -1;
+            var browserBack = document.getElementById("browser-back");
+            var browserImg = document.getElementById("browser-img");
+            var left = document.getElementById("left");
+            var right = document.getElementById("right");
+//            browserBack.style.height = (screen.availHeight-100)+"px";
+//            browserBack.style.height = (document.documentElement.scrollHeight)+"px";
+//            browserBack.style.height = (document.documentElement.clientHeight)+"px";
+
+//            browserImg.style.maxHeight = (document.documentElement.scrollHeight)+"px";
+
 
             function startTransform(eleObj,target) {
                 clearInterval(eleObj.timer);
@@ -58,6 +111,18 @@
                 },30);
             }
 
+            function showImage(url) {
+                browserImg.src=url;
+                browserBack.style.display="block";
+            }
+
+            function getImageIndex(obj) {
+                for(var i = 0;i < images.length;i++){
+                    if(images[i] == obj)
+                            return i;
+                }
+            }
+
             for(var i = 0; i < images.length;i++){
                 images[i].currentOpa = 0;
                 images[i].onmouseover = function(){
@@ -66,8 +131,72 @@
 
                 images[i].onmouseout = function(){
                     startTransform(this,0);
+                };
+
+                images[i].onclick = function(event){
+                    event.stopPropagation();
+                    showImage(this.src);
+
+                    currentSelectIndex = getImageIndex(this);
+
+                    if(currentSelectIndex == 0){
+                        left.style.display = "none";
+                    }else{
+                        left.style.display = "block";
+                    }
+
+                    if(currentSelectIndex == images.length-1){
+                        right.style.display = "none";
+                    }else{
+                        right.style.display = "block";
+                    }
+//                    alert(currentSelectIndex)
                 }
             }
+
+
+            left.onclick = function(event){
+                event.stopPropagation();
+                showImage(images[currentSelectIndex-1].src);
+                currentSelectIndex -= 1;
+                if(currentSelectIndex == 0){
+                    left.style.display = "none";
+                }else{
+                    left.style.display = "block";
+                }
+
+                if(currentSelectIndex == images.length-1){
+                    right.style.display = "none";
+                }else{
+                    right.style.display = "block";
+                }
+            };
+
+
+            right.onclick = function(event){
+                event.stopPropagation();
+                showImage(images[currentSelectIndex+1].src);
+                currentSelectIndex+=1;
+                if(currentSelectIndex == 0){
+                    left.style.display = "none";
+                }else{
+                    left.style.display = "block";
+                }
+
+                if(currentSelectIndex == images.length-1){
+                    right.style.display = "none";
+                }else{
+                    right.style.display = "block";
+                }
+            };
+
+            browserBack.onclick = function(event){
+                browserBack.style.display = "none";
+            }
+
+
+
+
         }
     </script>
 </head>
@@ -86,9 +215,17 @@
             <ul class="images-column">
                 <li><img class="images" src="img/image4.jpg"></li>
                 <li><img class="images" src="img/image5.jpg"></li>
-                <li><img class="images" src="img/image6.jpg"></li>
+                <li><img class="images" src="img/img8.jpg"></li>
             </ul>
         </li>
     </ul>
+
+    <div id="browser-back">
+        <img id="left" src="img/left.png">
+        <img id="browser-img" src="img/image1.jpg" />
+        <img id="right" src="img/right.png">
+        <!--<img id="close" src="img/close.png">-->
+
+    </div>
 </body>
 </html>
