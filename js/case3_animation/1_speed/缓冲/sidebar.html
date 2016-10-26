@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>变速运动</title>
+
+    <style type="text/css">
+
+        *{
+            margin:0;
+            padding:0;
+        }
+
+        #menu{
+            width:180px;
+            height:500px;
+            background-color: dodgerblue;
+            float:left;
+            opacity: 0.5;
+        }
+
+        #span{
+            width: 30px;
+            overflow: hidden;
+            text-align: center;
+            padding: 20px 10px;
+            background-color: darkslategray;
+            color: white;
+            border-top-right-radius: 10%;
+            border-bottom-right-radius: 10%;
+            cursor:pointer;
+        }
+
+        #sideBar{
+            position:absolute;
+            width:230px;
+            top:50px;
+            left:-180px;
+        }
+    </style>
+
+    <script>
+        window.onload = function(){
+            var time = 0;
+            var spanEle = document.getElementById("span");
+            var sideBarEle = document.getElementById("sideBar");
+            spanEle.onclick = function(){
+                if(time == 0){
+//                    alert(sideBarEle.offsetLeft);
+//                    alert(sideBarEle.offsetWidth);
+                    startMove(0);
+                    time = 1;
+                }else{
+                    startMove(-180);
+                    time = 0;
+                }
+            };
+            var timer = null;
+            function startMove(targetX){
+
+                clearInterval(timer);
+                timer = setInterval(function(){
+                    var step = (targetX - sideBarEle.offsetLeft) / 15;
+                    if(step > 0){
+                        step = Math.ceil(step);
+                    }else{
+                        step = Math.floor(step);
+                    }
+                    if(sideBarEle.offsetLeft != targetX)
+                        sideBarEle.style.left = (sideBarEle.offsetLeft + step)+"px";
+                    else{
+                        clearInterval(timer);
+                    }
+                },15);
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="sideBar">
+    <div id="menu">
+
+    </div>
+
+    <div id="span">
+        <span>侧栏</span>
+    </div>
+</div>
+</body>
+</html>

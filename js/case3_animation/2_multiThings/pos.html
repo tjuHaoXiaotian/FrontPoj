@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多物体位置</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+
+        .siderBar{
+            width:160px;
+            height:200px;
+            position:absolute;
+            left:-120px;
+        }
+
+        #sidebar1{
+            top:0;
+        }
+
+        #sidebar2{
+            top:220px;
+        }
+
+        #sidebar3{
+            top:440px;
+        }
+
+        .menu{
+            float: left;
+            width:120px;
+            height:300px;
+            background-color: #93C5E2;
+        }
+
+        .menu-span{
+            display:inline-block;
+            overflow: hidden;
+            width:30px;
+            height:60px;
+            padding:5px 5px;
+
+            background-color: #a4a4a4;
+            color:white;
+            text-align: center;
+        }
+    </style>
+
+    <script>
+
+        window.onload = function(){
+
+            var menuBarEles = document.getElementsByClassName("menu-span");
+            var sideBars = document.getElementsByClassName("siderBar");
+
+            function moveToPosX(eleObj, targetX) {
+                clearInterval(eleObj.timer);
+                eleObj.timer = setInterval(function(){
+                    var step = (targetX - eleObj.offsetLeft)/15;
+                    step = step > 0? Math.ceil(step):Math.floor(step);
+                    if(eleObj.offsetLeft != targetX){
+                        eleObj.style.left = (eleObj.offsetLeft + step) +"px";
+                    }else{
+                        clearInterval(eleObj.timer);
+                    }
+                },30);
+            }
+
+            var index = 0;
+            for(; index < menuBarEles.length;index++){
+                sideBars[index].timer = null;
+                menuBarEles[index].times = 0;
+                menuBarEles[index].onclick = function(){
+                    if(this.times == 0){
+                        moveToPosX(sideBars[(this.id-1)],0);
+                        this.times = 1;
+                    }else{
+                        moveToPosX(sideBars[(this.id-1)],-120);
+                        this.times = 0;
+                    }
+                };
+            }
+        }
+    </script>
+</head>
+<body>
+
+
+<div class="siderBar" id="sidebar1">
+    <div class="menu" >
+
+    </div>
+    <a class="menu-span" id="1">
+        侧栏
+    </a>
+</div>
+
+
+<div class="siderBar" id="sidebar2">
+    <div class="menu">
+
+    </div>
+    <a class="menu-span" id="2">
+        侧栏
+    </a>
+</div>
+
+<div class="siderBar" id="sidebar3">
+    <div class="menu">
+
+    </div>
+    <a class="menu-span" id="3">
+        侧栏
+    </a>
+</div>
+</body>
+</html>

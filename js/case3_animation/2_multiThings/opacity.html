@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多物体透明度</title>
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+        }
+
+        .images-row{
+            list-style: none;
+            width:660px;
+            margin:0 auto;
+        }
+
+        .images-row > li{
+            height:320px;
+            background-color: #93C5E2;
+            margin: 20px 0;
+        }
+
+        .images-column{
+            list-style: none;
+            width:660px;
+        }
+
+        .images-column > li{
+            float: left;
+            margin: 10px 10px;
+        }
+
+        .images{
+            max-width: 200px;
+            display: block;
+            opacity: 0;
+            /*filter:alpha(opacity=60);*/
+        }
+    </style>
+
+    <script>
+        window.onload = function(){
+            var images = document.getElementsByTagName("img");
+
+            function startTransform(eleObj,target) {
+                clearInterval(eleObj.timer);
+                eleObj.timer = setInterval(function(){
+                    var step = (target - eleObj.currentOpa) / 20;
+                    step = step > 0? Math.ceil(step):Math.floor(step);
+                    if(eleObj.currentOpa != target){
+                        eleObj.currentOpa += step;
+                        eleObj.style.opacity = eleObj.currentOpa / 100;
+                    }else{
+                        clearInterval(eleObj.timer);
+                    }
+                },30);
+            }
+
+            for(var i = 0; i < images.length;i++){
+                images[i].currentOpa = 0;
+                images[i].onmouseover = function(){
+                    startTransform(this,100);
+                };
+
+                images[i].onmouseout = function(){
+                    startTransform(this,0);
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <ul class="images-row">
+        <li>
+            <ul class="images-column">
+                <li><img class="images" src="img/image1.jpg"></li>
+                <li><img class="images" src="img/image2.jpg"></li>
+                <li><img class="images" src="img/image3.jpg"></li>
+            </ul>
+        </li>
+
+        <li>
+            <ul class="images-column">
+                <li><img class="images" src="img/image4.jpg"></li>
+                <li><img class="images" src="img/image5.jpg"></li>
+                <li><img class="images" src="img/image6.jpg"></li>
+            </ul>
+        </li>
+    </ul>
+</body>
+</html>
