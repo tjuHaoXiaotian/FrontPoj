@@ -5,7 +5,7 @@
     <title>测试</title>
     <style>
         div{
-            /*width: 300px;*/
+            width: 300px;
             height: 300px;
             background-color: red;
             border: 10px solid blue;
@@ -17,11 +17,20 @@
             var divEle = document.getElementById("div");
             alert("width: "+divEle.style.width);
             alert("width: "+divEle.offsetWidth);
+            alert("get style:width: "+getStyle(divEle,"width"));
+        };
+
+        function getStyle(obj,attr){
+            if(obj.currentStyle){   //IE
+                return obj.currentStyle[attr];
+            }else{
+                return getComputedStyle(obj,false)[attr];
+            }
         }
     </script>
 </head>
 <body>
-<div id="div" style="width: 300px">
+<div id="div">
 
 </div>
 </body>
