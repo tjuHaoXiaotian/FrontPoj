@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>同时运动</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding:0;
+        }
+
+        #S{
+            width:80px;
+            height: 100px;
+            background-color: #93C5E2;
+            margin: 0 auto;
+        }
+
+        #T{
+            width:110px;
+            height: 140px;
+            background-color: #93C5E2;
+            margin: 0 auto;
+            border-radius: 10% 10% 30% 30%;
+        }
+
+        #M1{
+            width: 150px;
+            height: 80px;
+            background-color: #93C5E2;
+            border-top-left-radius: 100%;
+        }
+        #M2{
+            width: 150px;
+            height: 80px;
+            background-color: #93C5E2;
+            border-top-right-radius: 100%;
+        }
+
+        #M3{
+            width: 150px;
+            height: 80px;
+            background-color: #93C5E2;
+
+        }
+        #M4{
+            width: 150px;
+            height: 80px;
+            background-color: #93C5E2;
+
+        }
+
+        #left{
+            /*border:3px solid red;*/
+            position: absolute;
+            top:250px;
+            left:50%;
+            transform: translate(-140%,0);
+        }
+
+        #right{
+            /*border:3px solid red;*/
+            position: absolute;
+            top:250px;
+            left:50%;
+            transform: translate(40%,0);
+        }
+    </style>
+    <script src="Move.js"></script>
+    <script>
+        window.onload = function(){
+            var param = {height:400};
+            var param2 = {height:80};
+
+            var div = document.getElementById("S");
+            div.onmouseover = function(){
+                startAnimation(div,param,5);
+            };
+            div.onmouseout = function(){
+                startAnimation(div,param2,5);
+            };
+            function start() {
+                startAnimation(div, param, 10, function () {
+                    startAnimation(div, param2, 10,start);
+                });
+            }
+
+            var left = document.getElementById("left");
+            var paramLeft = {width:100};
+            var paramLeft2 = {width:150};
+
+            var paramRight = {width:10};
+            var paramRight2 = {width:150};
+            var right = document.getElementById("right");
+            function startLeft() {
+                startAnimation(left, paramLeft, 5, function () {
+                    startAnimation(left, paramLeft2, 50,startLeft);
+                });
+            }
+
+            function startRight() {
+                startAnimation(right, paramRight, 14, function () {
+                    startAnimation(right, paramRight2, 14,startRight);
+                });
+            }
+
+            start();
+            startLeft();
+            startRight();
+        }
+    </script>
+</head>
+<body>
+<div id="S">
+
+</div>
+
+<div id="T">
+
+</div>
+<div id="left">
+    <div id="M1">
+
+    </div>
+    <div id="M3">
+
+    </div>
+
+</div>
+
+<div id="right">
+    <div id="M2">
+
+    </div>
+    <div id="M4">
+
+    </div>
+</div>
+</body>
+</html>
