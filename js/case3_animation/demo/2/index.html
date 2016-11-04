@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>首页</title>
+
+    <style type="text/css">
+
+        *{
+            margin:0;
+            padding:0;
+        }
+        
+        body{
+            /*background-color: gray;*/
+        }
+
+        ul{
+            width:900px;
+            margin:0 auto;
+            list-style: none;
+            /*background-color: #eeeeee;*/
+        }
+
+        .item{
+            box-shadow: rgba(0,0,0,0.3) 5px 5px 13px 0px;
+            margin:0 20px;
+            width:240px;
+            float: left;
+        }
+
+        .img{
+            position:relative;
+        }
+
+        .text{
+            height:80px;
+            background-color: #ffffff;
+            margin-top: -40px;
+            position:relative;
+            /*box-shadow: inset 0px 120px 0px 0px rgba(255, 255, 255, 0.95);*/
+        }
+
+        .drop-up{
+        }
+
+        .title{
+            display: block;
+            padding: 15px 20px 8px 20px;
+        }
+
+        .description{
+            font-size: 13px;
+            color: #a4a4a4;
+            padding-left:20px;
+            opacity: 0;
+        }
+
+        .read-times{
+            font-size: 13px;
+            color: #a4a4a4;
+            display: block;
+            position:absolute;
+            left:0;
+            bottom: 0;
+            padding-left:20px;
+            padding-bottom: 15px;
+        }
+    </style>
+
+    <script src="../Move.js"></script>
+    <script>
+        window.onload = function(){
+            var itemEle = document.getElementsByClassName("item");
+            for(var i = 0;i < itemEle.length;i++){
+                itemEle[i].onmouseover = function(eve){
+                    var _this = this.getElementsByClassName("text")[0];
+                    var _this_2 = this.getElementsByClassName("description")[0];
+
+                    startAnimation(_this,{"margin-top":-80,height:120},5);
+                    startAnimation(_this_2,{opacity:100},10);
+                };
+
+                itemEle[i].onmouseout = function(eve){
+                    var _this = this.getElementsByClassName("text")[0];
+                    var _this_2 = this.getElementsByClassName("description")[0];
+
+                    startAnimation(_this,{"margin-top":-40,height:80},5);
+                    startAnimation(_this_2,{opacity:0},5);
+                }
+            }
+
+        }
+    </script>
+</head>
+<body>
+<ul>
+    <li class="item">
+        <i class="img"><img src="img/img1.jpg"/></i>
+        <div class="text">
+            <div class="drop-up">
+                <span class="title">倒计时效果</span>
+                <p class="description">电商网站抢购很流行，必备技巧。</p>
+            </div>
+            <span class="read-times">38273人在学</span>
+        </div>
+    </li>
+
+    <li class="item">
+        <i class="img"><img src="img/img2.jpg"/></i>
+        <div class="text">
+            <div class="drop-up">
+                <span class="title">信息滚动效果制作</span>
+                <p class="description">萌萌的妹子带你快速学习滚动效果。</p>
+            </div>
+            <span class="read-times">34733人在学</span>
+        </div>
+    </li>
+
+    <li class="item">
+        <i class="img"><img src="img/img3.jpg"/></i>
+        <div class="text">
+            <div class="drop-up">
+                <span class="title">商城分类导航效果</span>
+                <p class="description">两种方式实现分类导航，还有小技巧。</p>
+            </div>
+            <span class="read-times">43517人在学</span>
+        </div>
+    </li>
+</ul>
+</body>
+</html>
