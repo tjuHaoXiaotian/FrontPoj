@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <style type="text/css">
+        #box{
+            width:200px;
+            height:200px;
+            padding:100px;
+            background-color: red;
+            border:100px solid blue;
+            margin:100px;
+            overflow: hidden;
+        }
+        
+        #box li{
+            background-color: #088ff2;
+            border:2px solid white;
+            list-style:none;
+            height: 24px;
+            overflow: hidden;
+        }
+    </style>
+
+    <script>
+        window.onload = function(){
+            var box = document.getElementById("box");
+//            alert("offsetTop: "+box.offsetTop);
+//            alert("scrollHeight: "+box.scrollHeight);  // 不加border，有padding
+//            alert("offsetHeight: "+box.offsetHeight);  // 加上border
+//            alert("scrollTop: "+box.scrollTop);
+            box.scrollTop = 0;
+            function scrollUp(){
+                box.scrollTop+=10;
+                console.log(box.scrollTop)
+            }
+            var timer = setInterval(function(){
+                scrollUp();
+            },300);
+//            alert("scrollTop: "+box.scrollTop);
+
+        }
+    </script>
+</head>
+<body>
+
+
+<div id="box">
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+        <li>10</li>
+        <li>11</li>
+        <li>12</li>
+        <li>13</li>
+        <li>14</li>
+        <li>15</li>
+        <li>16</li>
+        <li>17</li>
+    </ul>
+</div>
+
+
+</body>
+</html>
