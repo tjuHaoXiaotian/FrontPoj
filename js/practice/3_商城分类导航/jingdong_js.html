@@ -271,12 +271,12 @@
             font-size: 14px;;
         }
 
-        #menu-items > li:hover{
+        #menu-items > .lihover{
             background-color: #999395;
             background-size: 190px 30px;
         }
 
-        #menu-items > li:hover .submenu{
+        #menu-items > .lihover .submenu{
             display: block;
         }
 
@@ -477,6 +477,28 @@
         /* 第二行，侧栏菜单，轮播 end */
 
     </style>
+
+    <script type="text/javascript">
+        window.onload = function(){
+            var menu =  document.getElementById("menu-items");
+
+            var lis = menu.childNodes;
+            var count = 0;
+            for(var i = 0;i<lis.length;i++){
+//                if(lis[i].nodeName == "LI"){
+                if(lis[i].nodeType == 1){
+                    count++;
+                    lis[i].onmouseover = function(eve){
+                        this.className = "lihover";
+                    };
+
+                    lis[i].onmouseout = function(eve){
+                        this.className = "";
+                    };
+                }
+            }
+        }
+    </script>
 </head>
 <body>
 
