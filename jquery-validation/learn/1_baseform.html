@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <style>
+        li.invalid{
+            color:red;
+        }
+    </style>
+    <script src="../jquery-validation-1.15.0/lib/jquery-1.9.1.js"></script>
+    <script src="../jquery-validation-1.15.0/dist/jquery.validate.js"></script>
+</head>
+<body>
+
+<form id="form" method="get" action="1_baseform.html">
+    <div>
+        <span>邮编</span>
+        <input type="text" name="postcode">
+    </div>
+    <div>
+        <span>用户名</span>
+        <input type="text" name="username">
+    </div>
+    <div>
+        <span>密码</span>
+        <input id="password" type="password" name="password">
+    </div>
+
+    <div>
+        <span>确认密码</span>
+        <input type="password" name="confirm-password">
+    </div>
+    <div>
+        <p id="info"></p>
+    </div>
+    <input type="submit" value="提交">
+    <button id="check" type="button">检查</button>
+</form>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("form").validate({
+//            debug:true,
+            rules:{
+                postcode:{
+                    postcode:"中国"
+                },
+                username:{
+                    required:true,
+//                    minlength:2,
+//                    maxlength:20,
+                    rangelength:[2,10],
+                    remote:{
+                        url:"remote.json",
+                        type:"post",
+                        data:{
+                            loginTime:function(){
+                                return +new Date()
+                            }
+                        }
+                    }
+                },
+                password:{
+                    required:true,
+                    minlength:6,
+                    maxlength:20
+                },
+                "confirm-password":{
+                    equalTo:"#password"
+                }
+            },
+            messages:{
+                username:{
+                    required:"必须填写用户名",
+//                    minlength:"用户名最少2位",
+//                    maxlength:"用户名最多10位"
+                    rangelength:"用户名范围2-10位"
+                },
+                password:{
+                    required:"必须填写用户名",
+                    minlength:"密码最少6位",
+                    maxlength:"密码最多20位"
+                },
+                "confirm-password":{
+                    equalTo:"两次输入的密码不一致"
+                }
+            }
+            ,submitHandler:function(form){
+                console.log($(form).serialize());
+            },
+//            groups:{
+//                login:"username password confirm-password"
+//            }
+//            ,errorPlacement:function(error,element){
+//                error.insertBefore("#info");
+//            },
+            errorClass:"invalid",
+            validClass:"valid",
+            errorContainer:"#info",
+            errorLabelContainer:"#info",
+            errorElement:"li",
+            wrapper:"ul",
+            showErrors:function(errorMap,errorList){
+                console.log(errorMap);
+                console.log(errorList);
+                this.defaultShowErrors();
+            },
+//            success:"right",// 验证通过的元素添加一个class：right
+            success:function(label){   // 针对的是 标签label
+                label.addClass("right")
+            },
+            hightlight:function(element,errorClass,validClass){  // 针对的是 input
+                $(element).addClass(errorClass).removeClass(validClass)
+            },
+            unhightlight:function(element,errorClass,validClass){
+                $(element).addClass(validClass).removeClass(errorClass)
+            }
+        });
+        $("#check").click(function(){
+            alert($("#form").valid()?true:false)
+        });
+
+        $.validator.addMethod("postcode",function(value,element,params){
+            var postcode = /^[0-9]{6}$/;
+            alert(params);
+            return this.optional(element) || (postcode.test(value));    // optional()是否填写了值
+        }, $.validator.format("请填写{0}正确的邮政编码！"))
+    })
+</script>
+</body>
+</html>

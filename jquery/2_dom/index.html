@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>JQuery 处理dom节点</title>
+</head>
+<body>
+<h4>一、原生api处理</h4>
+<ul>
+    <li>document.createElement()</li>
+    <li>obj.setAttribute()</li>
+    <li>obj.innerHTML</li>
+    <li>parent.appendChild(obj)</li>
+</ul>
+<h4>二、Jquery对象创建</h4>
+<ul>
+    <li>$newObj = $("&lt;div&gt;&lt;img src=""/&gt;&lt;/div&gt;")</li>
+    <li>$parent.append($newObj)</li>
+    <li>$newObj.appendTo($parent)</li>
+</ul>
+<h3>三、插入</h3>
+<h4>外部插入</h4>
+<ul>
+    <li>obj.before(param1,param2,...),[HTML字符串，DOM元素，Jquery对象]</li>
+    <li>obj.after(param1,param2,...)</li>
+</ul>
+<h4>外部插入2</h4>
+<ul>
+    <li>param1.insertBefore(obj),[HTML字符串，DOM元素，Jquery对象]</li>
+    <li>param1.insertAfter(obj)</li>
+</ul>
+<h4>内部插入</h4>
+<ul>
+    <li>$newObj = $("&lt;div&gt;&lt;img src=""/&gt;&lt;/div&gt;")</li>
+    <li>$parent.prepend($newObj)</li>
+    <li>$newObj.prependTo($parent)</li>
+</ul>
+<h4>四、删除</h4>
+empty只会删除子元素<br>
+remove:会删除子元素及自己并注销掉所有事件
+<ul>
+    <li>obj.empty()</li>
+    <li>$(".test1").remove()</li>
+    <li>$("p").remove(":contains('3')")</li>
+    <li>detach<br>
+        var p;<br>
+        $("#bt1").click(function() {<br>
+        if (!$("p").length) return; //去重<br>
+        //通过detach方法删除元素<br>
+        //只是页面不可见，但是这个节点还是保存在内存中<br>
+        //数据与事件都不会丢失<br>
+        p = $("p").detach()<br>
+        });<br>
+        <br>
+        $("#bt2").click(function() {<br>
+        //把p元素在添加到页面中<br>
+        //事件还是存在<br>
+        $("body").append(p);<br>
+        });<br>
+    </li>
+</ul>
+
+<h4>5、DOM节点的复制与替换</h4>
+<ul>
+    <li>
+        <h5>复制</h5>
+        JavaScript部分<br>
+        $("div").on('click', function() {//执行操作})<br>
+        <br>
+        //clone处理一<br>
+        $("div").clone()   //只克隆了结构，事件丢失<br>
+        <br>
+        //clone处理二<br>
+        $("div").clone(true) //结构、事件与数据都克隆<br>
+        <br>
+        //clone处理三<br>
+        $(".aaron2").on('click', function() {<br>
+        console.log(1)<br>
+        $(".left").append( $(this).clone(true)<b>.css('color','blue') )</b><br>
+        })<br>
+    </li>
+    <li>
+        <h5>替换</h5>
+        <ul>
+            <li>.replaceAll()和.replaceWith()功能类似，主要是目标和源的位置区别</li>
+            <li>.replaceWith()与.replaceAll() 方法会删除与节点相关联的所有数据和事件处理程序</li>
+            <li>.replaceWith()方法，和大部分其他jQuery方法一样，返回jQuery对象，所以可以和其他方法链接使用</li>
+            <li>.replaceWith()方法返回的jQuery对象引用的是替换前的节点，而不是通过replaceWith/replaceAll方法替换后的节点</li>
+        </ul>
+    </li>
+    <li>添加父元素（包裹wrap）
+        <ul>
+            <li>.wrap( wrappingElement )：在集合中匹配的每个元素周围包裹一个HTML结构
+                <p>$('p').wrap('&lt;div&gt;&lt;/div&gt;')</p>
+            </li>
+            <li>.wrap( function ) ：一个回调函数，返回用于包裹匹配元素的 HTML 内容或 jQuery 对象
+            <p>
+                $('p').wrap(function() {<br>
+                return &lt;div&gt;&lt;/div&gt;';   //与第一种类似，只是写法不一样<br>
+                })<br>
+            </p></li>
+        </ul>
+    </li>
+    <li>
+        DOM包裹unwrap()方法
+    </li>
+    <li>
+        <h5>wrapAll()</h5>
+        wrap是针对单个dom元素处理，如果要将集合中的元素用其他元素包裹起来，也就是给他们增加一个父元素，针对这样的处理，JQuery提供了一个wrapAll方法<br/>
+        .wrapAll( wrappingElement )：给集合中匹配的元素增加一个外面包裹HTML结构<b>增加一个公共的包裹</b><br>
+        .wrapAll( function ) ：一个回调函数，返回用于包裹匹配元素的 HTML 内容或 jQuery 对象<b>通过回调分别包裹每一个</b><br>
+        通过回调的方式可以单独处理每一个元素<br>
+    </li>
+    <li>
+        <h5>wrapInner()</h5>
+        如果要将合集中的元素内部所有的子元素用其他元素包裹起来，并当作指定元素的子元素，针对这样的处理，JQuery提供了一个wrapInner方法<br>
+        .wrapInner( wrappingElement )：给集合中匹配的元素的内部，增加包裹的HTML结构<br>
+        .wrapInner( function ) ：允许我们用一个callback函数做参数，每次遇到匹配元素时，该函数被执行，返回一个DOM元素，jQuery对象，或者HTML片段，用来包住匹配元素的内容
+    </li>
+</ul>
+<h4>JQuery遍历</h4>
+<ul>
+    <li>
+        <h5>jQuery遍历之children()方法</h5>
+        <ul>
+            <li>jQuery是一个合集对象，如果想快速查找合集里面的第一级子元素，此时可以用children()方法。<br>
+                这里需要注意：.children(selector) 方法是返回匹配元素集合中每个元素的所有子元素（仅儿子辈，这里可以理解为就是父亲-儿子的关系）</li>
+        </ul>
+    </li>
+
+    <li>
+        <h5>jQuery遍历之find()方法</h5>
+        <ul>
+            <li>jQuery是一个合集对象，如果想快速查找DOM树中的这些元素的后代元素，此时可以用find()方法，这也是开发使用频率很高的方法。<br>
+                这里要注意 children与find方法的区别，children是父子关系查找，find是后代关系（包含父子关系）</li>
+            <li>find是遍历当前元素集合中每个元素的后代。只要符合，不管是儿子辈，孙子辈都可以。 </li>
+            <li> 与其他的树遍历方法不同，选择器表达式对于 .find() 是必需的参数。如果我们需要实现对所有后代元素的取回，可以传递通配选择器 '*'。 </li>
+            <li> find只在后代中遍历，不包括自己。 </li>
+            <li>选择器 context 是由 .find() 方法实现的；因此，$('.item-ii').find('li') 等价于 $('li .item-ii')(找到类名为item-ii的标签下的li标签)。 </li>
+        </ul>
+    </li>
+    <li>
+        <h5>jQuery遍历之parent()方法<i>与children()对应</i></h5>
+        <ul>
+            <li>jQuery是一个合集对象，如果想快速查找合集里面的每一个元素的父元素（这里可以理解为就是父亲-儿子的关系），此时可以用parent()方法</li>
+            <li>因为是父元素，这个方法只会向上查找一级</li>
+            <li>注意：jQuery是一个合集对象，所以通过parent是匹配合集中每一个元素的父元素</li>
+            <li>同样的也是因为jQuery是合集对象，可能需要对这个合集对象进行一定的筛选，找出目标元素，所以允许传一个选择器的表达式</li>
+        </ul>
+    </li>
+    <li>
+        <h5>jQuery遍历之parents()方法<i>与find()对应</i></h5>
+        <ul>
+            <li>
+                jQuery是一个合集对象，如果想快速查找合集里面的每一个元素的所有祖辈元素，此时可以用parents()方法
+            </li>
+            <li>parents()无参数</li>
+            <li>parents()方法选择性地接受同一型选择器表达式</li>
+        </ul>
+    </li>
+
+    <li>
+        <h5>jQuery遍历之closest()方法</h5>
+        <ul>
+            <li>1.起始位置不同：.closest开始于当前元素 .parents开始于父元素</li>
+            <li>2.遍历的目标不同：.closest要找到指定的目标，.parents遍历到文档根元素，closest向上查找，直到找到一个匹配的就停止查找，parents一直查找到根元素，并将匹配的元素加入集合</li>
+            <li>3.结果不同：.closest返回的是包含零个或一个元素的jquery对象，parents返回的是包含零个或一个或多个元素的jquery对象</li>
+        </ul>
+    </li>
+
+    <li>
+        <h5>jQuery遍历之next()方法</h5>
+        <ul>
+            <li>jQuery是一个合集对象，如果想快速查找指定元素集合中每一个元素紧邻的后面同辈元素的元素集合，此时可以用next()方法</li>
+            <li>next()无参数</li>
+            <li>next(filter)方法选择性地接受同一类型选择器表达式</li>
+        </ul>
+    </li>
+
+    <li>
+        <h5>jQuery遍历之prev()方法</h5>
+        <ul>
+            <li>jQuery是一个合集对象，如果想快速查找指定元素集合中每一个元素紧邻的前面同辈元素的元素集合，此时可以用prev()方法</li>
+            <li>prev()无参数</li>
+            <li>prev()方法选择性地接受同一类型选择器表达式</li>
+        </ul>
+    </li>
+
+    <li>
+        <h5>jQuery遍历之siblings()</h5>
+        <ul>
+            <li>jQuery是一个合集对象，如果想快速查找指定元素集合中每一个元素的同辈元素，此时可以用siblings()方法</li>
+            <li>siblings()无参数</li>
+            <li>siblings()方法选择性地接受同一类型选择器表达式</li>
+        </ul>
+    </li>
+
+    <li>
+        <h5>jQuery遍历之add()方法</h5>
+        <ul>
+            <li>jQuery是一个合集对象，通过$()方法找到指定的元素合集后可以进行一系列的操作。$()之后就意味着这个合集对象已经是确定的，如果后期需要再往这个合集中添加一新的元素要如何处理？jQuery为此提供add方法，用来创建一个新的jQuery对象 ，元素添加到匹配的元素集合中</li>
+            <li>$('li').add('p')</li>
+            <li>$('li').add('<p>新的p元素</p>').appendTo(目标位置)</li>
+        </ul>
+    </li>
+
+    <li>
+        <h5>jQuery遍历之each()</h5>
+        <ul>
+            <li>jQuery是一个合集对象，通过$()方法找到指定的元素合集后可以进行一系列的操作。比如我们操作$("li").css('') 给所有的li设置style值，因为jQuery是一个合集对象，所以css方法内部就必须封装一个遍历的方法，被称为隐式迭代的过程。要一个一个给合集中每一个li设置颜色，这里方法就是each</li>
+            <li>.each() 方法就是一个for循环的迭代器，它会迭代jQuery对象合集中的每一个DOM元素。每次回调函数执行时，会传递当前循环次数作为参数(从0开始计数</li>
+            <li>$("li").each(function(index, element) {<br>
+                &nbsp;&nbsp;index 索引 0,1<br>
+                &nbsp;&nbsp;element是对应的li节点 li,li<br>
+                &nbsp;&nbsp;this 指向的是li<br>
+                })</li>
+            <li>这样可以在循环体会做一些逻辑操作了，如果需要提前退出，可以以通过返回 false以便在回调函数内中止循</li>
+        </ul>
+    </li>
+
+
+</ul>
+</body>
+</html>
