@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #main {
+            position: relative;
+        }
+
+        .box {
+            padding: 15px 0 0 15px;
+            float: left;
+        }
+
+        .pic {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #ccc;
+        }
+
+        .pic img{
+            width:165px;
+            height:auto;
+        }
+    </style>
+
+    <script type="text/javascript">
+        window.onload = function(){
+
+            waterfall("main","box");
+            var currentIndex = 22;
+            window.onscroll = function(){
+                if(needToLoadMore()){
+                    var parent = document.getElementById("main");
+                    // 后台获取
+                    console.log("load more ...");
+                    var data = [];
+                    for(var i = 0; i < 20; i++){
+                        currentIndex++;
+                        if(currentIndex > 97){
+                            currentIndex = 0;
+                        }
+                        data.push(
+                                {
+                                    src:"images/"+currentIndex+".jpg"
+                                }
+                        )
+                    }
+                    for(i = 0;i < data.length;i++){
+                        var box = document.createElement("div");
+                        box.className = "box";
+                        parent.appendChild(box);
+                        var pic = document.createElement("div");
+                        pic.className = "pic";
+                        box.appendChild(pic);
+                        var img = document.createElement("img");
+                        img.src = data[i].src;
+                        pic.appendChild(img);
+                    }
+                    waterfall("main","box");
+                }
+            }
+        };
+
+        function waterfall(parent,box){
+            //将 main 下的所有class 为 box 的元素取出来
+            var oParent = document.getElementById(parent);
+
+            var boxs = getByClass(oParent,box);
+//            console.log(boxs);
+            // 计算整个页面的列数
+            var boxW = boxs[0].offsetWidth;
+            console.log(boxW);
+            var cols = Math.floor(document.documentElement.clientWidth / boxW);
+            // 设置 main 的宽
+            oParent.style.cssText = "width:"+boxW * cols + "px;margin:0 auto;";
+
+            var heightArray = [];  // 存放每一列高度的数组
+            for(var i = 0; i < boxs.length;i++){
+                if(i < cols){
+                    heightArray.push(boxs[i].offsetHeight)
+                }else{
+                    var minH = Math.min.apply(null,heightArray);
+                    var index = getMinHIndex(heightArray,minH);
+                    boxs[i].style.cssText = "position:absolute;top:"+minH+"px;left:"+boxW*index+"px";
+                    heightArray[index] += boxs[i].offsetHeight;
+                }
+            }
+            console.log(heightArray)
+        }
+
+        function getByClass(parent,classname){
+            var result = [];
+            var items = document.getElementsByTagName("*");
+            for(var i = 0;i < items.length;i++){
+                if(items[i].className == classname){
+                    result.push(items[i]);
+                }
+            }
+            return result;
+        }
+
+        function getMinHIndex(array,minHeight){
+            for(var i in array){
+                if(array[i] == minHeight){
+                    return i;
+                }
+            }
+        }
+
+        // 检测是否具备了滚动加载数据库的条件
+        function needToLoadMore(){
+            var parent = document.getElementById("main");
+            var boxs = getByClass(parent,"box");
+            var lastBox = {
+                offsetHeight:boxs[boxs.length-1].offsetTop + Math.floor(boxs[boxs.length-1].offsetHeight/2)
+            };
+
+            var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;  // 混杂模式 and 标准模式
+            var windowHeight = document.body.clientHeight || document.documentElement.clientHeight;  // 混杂模式 and 标准模式
+            return scrollTop + windowHeight > lastBox.offsetHeight;
+        }
+    </script>
+</head>
+<body>
+<div id="main">
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/0.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/1.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/2.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/3.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/4.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/5.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/6.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/7.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/8.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/9.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/10.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/11.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/12.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/13.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/14.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/15.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/16.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/17.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/18.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/19.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/20.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/21.jpg"/>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="pic">
+            <img src="images/22.jpg"/>
+        </div>
+    </div>
+</div>
+</body>
+</html>

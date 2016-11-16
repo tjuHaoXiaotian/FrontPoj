@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        img{
+            display: block;
+            height: 300px;
+        }
+    </style>
+
+</head>
+<body>
+<h2>解决跨域的方法</h2>
+<ul>
+    <li><img src="Proxy.jpg"> </li>
+    <li>
+        <h3>利用的是&lt;script src="可以跨域" &gt; 返回格式拼成 funcName(返回的json 数据)，JQuery封装了一个名为jsonp的函数来把返回的json数据渲染到页面，所以相当于是引入另一个域的js调用本页面的js</h3>
+        <h3><i>注意：jsonp只支持GET，因为 &lt;script src="" &gt; src 相当于是get请求！</i></h3>
+        <img src="jsonp.jpg">
+        <img src="jsonp2.jpg">
+    </li>
+    <li><img src="XHR2.jpg"> </li>
+
+</ul>
+</body>
+</html>
