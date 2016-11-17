@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <title></title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+
+        body{
+            background-color: #333;
+        }
+
+        .bg-div{
+            /*background-image: url(img/river.jpg);*/
+            background-image: url(img/back.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            margin:0 auto;
+            top:0;
+            left:0;
+            right:0;
+            bottom: 0;
+            position:absolute;
+        }
+
+        .log{
+            background-image: url(img/logo.png);
+            width:107px;
+            height:53px;
+            float:left;
+            margin:-4px 18px 0 0;
+        }
+
+        .search-form{
+            float: left;
+            width:390px;
+            background-color: #ffffff;
+        }
+
+        .search-input{
+            border:none;
+            float: left;
+            height:40px;
+            line-height: 40px;
+            outline: none;
+            width:350px;
+            font-size: 25px;
+        }
+
+        .search-button{
+            border:none;
+            background-image: url(img/search.png);
+            background-size: 25px 25px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: #0c8484;
+            width:40px;
+            height:40px;
+            float: left;
+        }
+
+        .search-box{
+            width:515px;
+            position:absolute;
+            top:30%;
+            left:50%;
+            transform:translate(-60%,-50%)
+        }
+
+
+        .suggest{
+            width:390px;
+            background-color: white;
+            border:1px solid #999;
+            position:absolute;
+            /*top:30%;*/
+            /*left:50%;*/
+            /*transform:translate(-47.2%,15px);*/
+            display: none;
+        }
+
+        .suggest ul{
+            list-style: none;
+            margin:0;
+            padding:0;
+        }
+
+        .suggest ul li{
+            padding:3px;
+            font-size: 14px;
+            line-height: 25px;
+            cursor: pointer;
+        }
+
+        .suggest ul li:hover{
+            text-decoration: underline;
+            background-color: #e5e5e5;
+        }
+    </style>
+
+    <script type="text/javascript" src="../../../jquery-validation/jquery-validation-1.15.0/lib/jquery-1.11.1.js"></script>
+
+    <script>
+        $(document).ready(function(){
+
+            $("#search-input").on("click keyup",function(){
+
+                var searchText = $.trim($("#search-input").val());
+                if(searchText.length > 0){
+                    $.ajax({
+                        type:"GET",
+                        url:"http://api.bing.com/qsonhs.aspx?q="+searchText,
+                        dataType:"json",
+                        success:function(data){
+                            if(data.AS.FullResults > 0){
+                                data = data.AS.Results[0].Suggests;
+                                console.log(data);
+                                var html = "";
+                                $.each(data,function(index,val){
+                                    html+="<li>"+val.Txt+"</li>"
+                                });
+                                $("#search-result").html(html);
+
+                                $("#search-suggest").show().css({
+                                    top:$("#search-form").offset().top+$("#search-form").outerHeight(),
+                                    left:($("#search-form").offset().left-1)
+                                });
+                            }
+                        },
+                        error:function(error){
+                            console.log(error);
+                        }
+                    });
+                }else{
+                    $("#search-suggest").hide();
+                }
+
+            });
+
+            $(document).on("click",function(){
+                $("#search-suggest").hide();
+            });
+
+//            $(document).delegate("li","click",function(e){
+//                var keyword = $(e.target).text();
+////                location.href="http://cn.bing.com/search?q="+keyword;
+//                window.open("http://cn.bing.com/search?q="+keyword);
+//            });
+
+            //多事件绑定一
+            $("ul").on('click',"li",function(e){
+                console.log(e.target);
+                var keyword = $(e.target).text();
+//                location.href="http://cn.bing.com/search?q="+keyword;
+                window.open("http://cn.bing.com/search?q="+keyword);
+            })
+
+        })
+    </script>
+</head>
+<body>
+<div class="bg-div">
+    <div class="search-box">
+        <div class="log"></div>
+        <form class="search-form" id="search-form">
+            <input type="text" id="search-input" class="search-input">
+            <input type="submit" class="search-button" value="">
+        </form>
+    </div>
+</div>
+
+<div class="suggest" id="search-suggest">
+    <ul id="search-result">
+        <li>搜索结果1</li>
+        <li>搜索结果2</li>
+        <li>搜索结果3</li>
+    </ul>
+</div>
+</body>
+</html>

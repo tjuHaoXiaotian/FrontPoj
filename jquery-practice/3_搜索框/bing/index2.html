@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <title></title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+
+        body{
+            background-color: #333;
+        }
+
+        .bg-div{
+            background-image: url(img/river.jpg);
+            /*background-image: url(img/back.jpg);*/
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            margin:0 auto;
+            top:0;
+            left:0;
+            right:0;
+            bottom: 0;
+            position:absolute;
+        }
+
+        .log{
+            background-image: url(img/logo.png);
+            width:107px;
+            height:53px;
+            float:left;
+            margin:-4px 18px 0 0;
+        }
+
+        .search-form{
+            float: left;
+            background-color: #ffffff;
+            padding:5px;
+        }
+
+        .search-input{
+            border:none;
+            float: left;
+            height:25px;
+            line-height: 25px;
+            outline: none;
+            width:350px;
+        }
+
+        .search-button{
+            border:none;
+            background-image: url(img/search-button.png);
+            width:29px;
+            height:29px;
+            float: left;
+        }
+
+        .search-box{
+            position:absolute;
+            top:30%;
+            left:50%;
+            transform:translate(-60%,-50%)
+        }
+    </style>
+</head>
+<body>
+<div class="bg-div">
+    <div class="search-box">
+        <div class="log"></div>
+        <form class="search-form">
+            <input type="text" class="search-input">
+            <input type="submit" class="search-button" value="">
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

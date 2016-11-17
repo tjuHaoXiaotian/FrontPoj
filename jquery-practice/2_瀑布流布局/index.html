@@ -89,7 +89,10 @@
                 }else{
                     var minH = Math.min.apply(null,heightArray);
                     var index = getMinHIndex(heightArray,minH);
-                    boxs[i].style.cssText = "position:absolute;top:"+minH+"px;left:"+boxW*index+"px";
+//                    boxs[i].style.cssText = "position:absolute;top:"+minH+"px;left:"+boxW*index+"px";
+                    boxs[i].style.cssText = "position:absolute;top:"+minH+"px;left:"+boxs[index].offsetLeft+"px";
+                    console.log(boxs[index]);
+                    console.log(boxs[index].offsetLeft);
                     heightArray[index] += boxs[i].offsetHeight;
                 }
             }
